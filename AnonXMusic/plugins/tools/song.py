@@ -29,6 +29,12 @@ from AnonXMusic.utils.inline.song import song_markup
 # Command
 SONG_COMMAND = ["indir"]
 
+def cookiefile():
+    cookie_dir = "cookies"
+    cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
+
+    return os.path.join(cookie_dir, cookies_files[0])
+
 @app.on_message(
     filters.command(SONG_COMMAND) & filters.group & ~BANNED_USERS
 )
