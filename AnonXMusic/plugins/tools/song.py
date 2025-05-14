@@ -231,7 +231,7 @@ async def song_download_cb(client, CallbackQuery, _):
     title = (x["title"]).title()  # Orijinal başlık
     duration = x["duration"]
     # Mesajınızı burada belirtiyoruz
-    thank_you_message = "Sonsuz Müzik kullandığınız için teşekkür ederiz! @sonsuzmuzikbot ile her anınızda müziğin ve filmin tadını çıkarın."
+    thank_you_message = "Sonsuz Müzik kullandığınız için teşekkür ederiz! @sonsuzmuzik_bot ile her anınızda müziğin ve filmin tadını çıkarın."
     if stype == "video":
         try:
             file_path = await YouTube.download(
