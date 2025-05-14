@@ -29,55 +29,6 @@ from AnonXMusic.utils.inline.song import song_markup
 # Command
 SONG_COMMAND = ["indir"]
 
-def cookiefile():
-    cookie_dir = "cookies"
-    cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
-
-    return os.path.join(cookie_dir, cookies_files[0])
-
-class YouTube:
-    @staticmethod
-    async def url(message):
-        # Mesajdan URL'yi çıkarır (regex ile)
-        urls = re.findall(r"(https?://[^\s]+)", message.text)
-        return urls[0] if urls else None
-
-    @staticmethod
-    async def formats(video_id: str, video: bool = False):
-        ydl_opts = {
-            "quiet": True,
-            "no_warnings": True,
-            "cookiefile": cookiefile(),
-            "skip_download": True,
-            "force_generic_extractor": False,
-            "format": "bestvideo+bestaudio/best",
-        }
-
-        formats_available = []
-        download_url = None
-
-        with YoutubeDL(ydl_opts) as ydl:
-            try:
-                info = ydl.extract_info(f"https://www.youtube.com/watch?v={video_id}", download=False)
-                formats = info.get("formats", [])
-
-                for fmt in formats:
-                    if fmt.get("filesize") and fmt.get("url"):
-                        if video:
-                            if "video" in fmt.get("format", "").lower():
-                                formats_available.append(fmt)
-                        else:
-                            if "audio" in fmt.get("format", "").lower():
-                                formats_available.append(fmt)
-
-                if formats_available:
-                    download_url = formats_available[0]["url"]
-
-            except Exception as e:
-                print(f"[YouTubeDL HATA]: {e}")
-
-        return formats_available, download_url
-
 @app.on_message(
     filters.command(SONG_COMMAND) & filters.group & ~BANNED_USERS
 )
