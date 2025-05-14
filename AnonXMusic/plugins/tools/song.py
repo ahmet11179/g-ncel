@@ -26,6 +26,12 @@ from AnonXMusic.utils.decorators.language import language, languageCB
 from AnonXMusic.utils.formatters import convert_bytes
 from AnonXMusic.utils.inline.song import song_markup
 
+def cookiefile():
+    cookie_dir = "cookies"
+    cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
+
+    return os.path.join(cookie_dir, cookies_files[0])
+
 # Command
 SONG_COMMAND = ["indir"]
 
