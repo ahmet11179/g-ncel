@@ -26,6 +26,8 @@ from AnonXMusic.utils.decorators.language import language, languageCB
 from AnonXMusic.utils.formatters import convert_bytes
 from AnonXMusic.utils.inline.song import song_markup
 
+import yt_dlp
+
 def cookiefile():
     cookie_dir = "cookies"
     cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
@@ -33,6 +35,20 @@ def cookiefile():
     if cookies_files:
         return os.path.join(cookie_dir, cookies_files[0])
     return None
+
+# İndirme işlemini yaparken cookie dosyasını kullanma
+def download_video(url):
+    cookies = cookiefile()
+    ydl_opts = {
+        'cookiefile': cookies,
+        'quiet': True,  # Gürültüyü kapat
+    }
+
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        ydl.download([url])
+
+# Örnek kullanım
+download_video("https://www.youtube.com/watch?v=")
 
 # Command
 SONG_COMMAND = ["indir"]
