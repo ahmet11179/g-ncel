@@ -37,6 +37,12 @@ def cookiefile():
 
 class YouTube:
     @staticmethod
+    async def url(message):
+        # Mesajdan URL'yi çıkarır (regex ile)
+        urls = re.findall(r"(https?://[^\s]+)", message.text)
+        return urls[0] if urls else None
+
+    @staticmethod
     async def formats(video_id: str, video: bool = False):
         ydl_opts = {
             "quiet": True,
