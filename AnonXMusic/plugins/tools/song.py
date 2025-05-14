@@ -26,30 +26,6 @@ from AnonXMusic.utils.decorators.language import language, languageCB
 from AnonXMusic.utils.formatters import convert_bytes
 from AnonXMusic.utils.inline.song import song_markup
 
-import yt_dlp
-
-def cookiefile():
-    cookie_dir = "cookies"
-    cookies_files = [f for f in os.listdir(cookie_dir) if f.endswith(".txt")]
-    
-    if cookies_files:
-        return os.path.join(cookie_dir, cookies_files[0])
-    return None
-
-# İndirme işlemini yaparken cookie dosyasını kullanma
-def download_video(url):
-    cookies = cookiefile()
-    ydl_opts = {
-        'cookiefile': cookies,
-        'quiet': True,  # Gürültüyü kapat
-    }
-
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
-
-# Örnek kullanım
-download_video("https://www.youtube.com/watch?v=")
-
 # Command
 SONG_COMMAND = ["indir"]
 
@@ -262,36 +238,60 @@ async def song_download_cb(client, CallbackQuery, _):
                 yturl,
                 None,  # mystic yerine None kullandım
                 songvideo=True,
-                callback=CallbackQuery.message.reply_text,
-                cookiefile=cookiefile(),
+                format_id=format_id,
+                title=title,  # Orijinal başlık
             )
-            return await CallbackQuery.edit_message_text(
-                text=f"{thank_you_message}\n\n{title} - {duration} seconds",
-                reply_markup=InlineKeyboardMarkup([ 
-                    [InlineKeyboardButton("Watch Video", url=file_path)]
-                ]),
+            med = InputMediaVideo(
+                media=file_path,
+                duration=duration,
+                thumb=thumb_image_path,
+                caption=thank_you_message,  # Burada mesajınızı ekliyoruz
+                supports_streaming=True,
             )
         except Exception as e:
-            return await CallbackQuery.edit_message_text(
-                text=f"Video indirilemedi: {e}"
-            )
-    else:
+            return await CallbackQuery.edit_message_text(_["song_9"].format(e))
+        
+        await app.send_chat_action(
+            chat_id=CallbackQuery.message.chat.id,
+            action=ChatAction.UPLOAD_VIDEO,
+        )
+        
         try:
-            file_path = await YouTube.download(
+            await CallbackQuery.edit_message_media(media=med)
+        except Exception as e:
+            print(e)
+            return await CallbackQuery.edit_message_text(_["song_10"])
+        
+        os.remove(file_path)
+    elif stype == "audio":
+        try:
+            filename = await YouTube.download(
                 yturl,
                 None,  # mystic yerine None kullandım
-                songvideo=False,
-                callback=CallbackQuery.message.reply_text,
-                cookiefile=cookiefile(),
+                songaudio=True,
+                format_id=format_id,
+                title=title,  # Orijinal başlık
             )
-            return await CallbackQuery.edit_message_text(
-                text=f"{thank_you_message}\n\n{title} - {duration} seconds",
-                reply_markup=InlineKeyboardMarkup([ 
-                    [InlineKeyboardButton("Download Song", url=file_path)]
-                ]),
+            med = InputMediaAudio(
+                media=filename,
+                caption=thank_you_message,  # Burada mesajınızı ekliyoruz
+                thumb=thumb_image_path,
+                title=title,  # Orijinal başlık
+                performer="@sonsuzmuzik_bot",  # Şarkıcı ismini belirtiyoruz
             )
         except Exception as e:
-            return await CallbackQuery.edit_message_text(
-                text=f"Ses indirilemedi: {e}"
-            )
-
+            return await CallbackQuery.edit_message_text(_["song_9"].format(e))
+        
+        await app.send_chat_action(
+            chat_id=CallbackQuery.message.chat.id,
+            action=ChatAction.UPLOAD_AUDIO,
+        )
+        
+        try:
+            await CallbackQuery.edit_message_media(media=med)
+        except Exception as e:
+            print(e)
+            return await CallbackQuery.edit_message_text(_["song_10"])
+        
+        os.remove(filename)
+    os.remove(thumb_image_path)
