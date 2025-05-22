@@ -3,7 +3,7 @@ from pyrogram.types import Message
 from gtts import gTTS
 from AnonXMusic import app
 
-@app.on_message(filters.command('tts'))
+@app.on_message(filters.command('ses'))
 async def text_to_speech(client, message: Message):
     try:
         if len(message.text.split()) < 2:
