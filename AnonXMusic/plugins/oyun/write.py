@@ -7,12 +7,6 @@ from AnonXMusic import app as app
 import requests
 
 @app.on_message(filters.command("sayfa"))
-async def handwrite(bot, message):
-    try:
-        # Botun mesaj silme yetkisini kontrol et ve silme işlemi yap
-        await message.delete()  # Kullanıcının yazdığı komutu sil
-    except Exception:
-        pass  # Hata olursa hiçbir şey yapma ve geç
 async def handwrite(_, message: Message):
     if message.reply_to_message:
         text = message.reply_to_message.text
@@ -35,3 +29,9 @@ Verilen metni beyaz bir sayfada kalemle yazılmış gibi gösterir 🖊
 
 ❍ /write <Metin> *:* Verilen metni beyaz bir sayfada yazılmış olarak gösterir.
 """  # Yardım kısmındaki açıklamalar Türkçeye çevrildi.
+async def handwrite(bot, message):
+    try:
+        # Botun mesaj silme yetkisini kontrol et ve silme işlemi yap
+        await message.delete()  # Kullanıcının yazdığı komutu sil
+    except Exception:
+        pass  # Hata olursa hiçbir şey yapma ve geç
