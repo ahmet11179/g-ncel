@@ -5,8 +5,8 @@ from pyrogram import Client, filters
 from pyrogram.types import Message
 from pyrogram.raw.functions.messages import DeleteHistory
 
-from DAXXMUSIC import userbot as us, app
-from DAXXMUSIC.core.userbot import assistants
+from AnonXMusic import userbot as us, app
+from AnonXMusic.core.userbot import assistants
 
 @app.on_message(filters.command("gecmis"))  # /gecmis komutu ile çalışır
 async def sg(client: Client, message: Message):
