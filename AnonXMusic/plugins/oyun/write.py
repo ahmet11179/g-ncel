@@ -7,31 +7,27 @@ from AnonXMusic import app as app
 import requests
 
 @app.on_message(filters.command("sayfa"))
-async def handwrite(_, message: Message):
+async def handwrite(bot, message: Message):
+    try:
+        await message.delete()  # Komut mesajını sil
+    except Exception:
+        pass  # Yetki yoksa hata vermez
+
     if message.reply_to_message:
         text = message.reply_to_message.text
     else:
-        text = message.text.split(None, 1)[1]
-    m = await message.reply_text("Lütfen bekleyin...,\n\nMetniniz yazılıyor...")  # Burada `await` kullanmamız gerekiyor.
+        parts = message.text.split(None, 1)
+        if len(parts) < 2:
+            await message.reply_text("Lütfen yazılacak metni belirtin! Örnek: /sayfa Merhaba dünya")
+            return
+        text = parts[1]
+
+    m = await message.reply_text("Lütfen bekleyin...,\n\nMetniniz yazılıyor...")
     write = requests.get(f"https://apis.xditya.me/write?text={text}").url
 
     caption = f"""
 Başarıyla yazılmış metin 💘
-🥀 yazan:{message.from_user.mention}✨
+🥀 yazan: {message.from_user.mention} ✨
 """
-    await m.delete()  # `await` ekledik çünkü bu da bir async işlemi
-    await message.reply_photo(photo=write, caption=caption)  # `await` ekledik
-
-mod_name = "Yazı Aracı"  # Modül ismi Türkçeye çevrildi
-
-help = """
-Verilen metni beyaz bir sayfada kalemle yazılmış gibi gösterir 🖊
-
-❍ /write <Metin> *:* Verilen metni beyaz bir sayfada yazılmış olarak gösterir.
-"""  # Yardım kısmındaki açıklamalar Türkçeye çevrildi.
-async def handwrite(bot, message):
-    try:
-        # Botun mesaj silme yetkisini kontrol et ve silme işlemi yap
-        await message.delete()  # Kullanıcının yazdığı komutu sil
-    except Exception:
-        pass  # Hata olursa hiçbir şey yapma ve geç
+    await m.delete()
+    await message.reply_photo(photo=write, caption=caption)
