@@ -1,13 +1,6 @@
 from pyrogram import Client, filters
 import random
-
-# Bot client'ınızı burada tanımlayın (api_id, api_hash ve token'u kendi bilgilerinizle değiştirin)
-app = Client(
-    "my_bot_session",
-    api_id=1234567,
-    api_hash="your_api_hash_here",
-    bot_token="your_bot_token_here"
-)
+from AnonXMusic import app as app
 
 def get_random_message(love_percentage: int) -> str:
     if love_percentage <= 30:
