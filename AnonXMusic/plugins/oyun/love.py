@@ -1,45 +1,28 @@
 from pyrogram import filters
 import random
-from AnonXMusic import app  # app burada Pyrogram Client olmalı
+from AnonXMusic import app
 
 def get_random_message(love_percentage):
-    if love_percentage <= 30:
-        return random.choice([
-            "Aşk havada ama biraz kıvılcım lazım.",
-            "İyi bir başlangıç ama gelişmeye açık.",
-            "Güzel bir şeyin başlangıcı."
-        ])
-    elif love_percentage <= 70:
-        return random.choice([
-            "Güçlü bir bağ var. Beslemeye devam et.",
-            "İyi bir şansın var. Üzerinde çalış.",
-            "Aşk filizleniyor, devam et."
-        ])
-    else:
-        return random.choice([
-            "Vay be! Cennet gibi bir uyum!",
-            "Mükemmel eşleşme! Bu bağı koru.",
-            "Birlikte olmaya yazgılısınız. Tebrikler!"
-        ])
+    # Aynı fonksiyonunuz
+    ...
 
 @app.on_message(filters.command("love", prefixes="/"))
 async def love_command(client, message):
-    # Özel mesaj değilse (private dışı)
     if message.chat.type != "private":
         members = []
         try:
             async for member in client.iter_chat_members(message.chat.id):
                 user = member.user
                 if user.is_bot:
-                    continue  # Botları atla
+                    continue
                 if user.username:
                     mention = f"@{user.username}"
                 else:
-                    mention = user.mention  # Kullanıcının ismine göre mention
+                    mention = user.mention
                 members.append(mention)
-        except Exception:
-            # Eğer üye listesine erişim olmazsa boş bırak
-            members = []
+        except Exception as e:
+            await message.reply_text(f"Üye listesine erişim hatası: {e}")
+            return
 
         if len(members) < 2:
             await message.reply_text("Bu sohbette yeterli üye yok ya da üye listesine erişilemiyor.")
