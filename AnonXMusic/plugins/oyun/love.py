@@ -24,25 +24,20 @@ def get_random_message(love_percentage: int) -> str:
             "Birlikte olmaya yazgılısınız. Tebrikler!"
         ])
 
-@app.on_message(filters.command("love") & ~filters.private)
+@app.on_message(filters.command("love", prefixes="/") & ~filters.private)
 async def love_command(client, message):
     members = []
-    try:
-        async for member in client.iter_chat_members(message.chat.id):
-            user = member.user
-            if user.is_bot:
-                continue
-            if user.username:
-                mention = f"@{user.username}"
-            else:
-                mention = user.mention
-            members.append(mention)
-    except Exception as e:
-        await message.reply_text(f"Üye listesine erişim hatası: {e}")
-        return
+    async for member in client.iter_chat_members(message.chat.id):
+        if member.user.is_bot:
+            continue
+        if member.user.username:
+            mention = f"@{member.user.username}"
+        else:
+            mention = member.user.mention
+        members.append(mention)
 
     if len(members) < 2:
-        await message.reply_text("Yeterli üye yok veya üyeler gizli.")
+        await message.reply("Yeterli üye yok.")
         return
 
     user1, user2 = random.sample(members, 2)
@@ -50,4 +45,4 @@ async def love_command(client, message):
     love_message = get_random_message(love_percentage)
 
     response = f"{user1} 💕 + {user2} 💕 = {love_percentage}%\n\n{love_message}"
-    await message.reply_text(response)
+    await message.reply(response)
