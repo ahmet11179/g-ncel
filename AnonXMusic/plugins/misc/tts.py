@@ -12,6 +12,6 @@ async def text_to_speech(client, message: Message):
         text = message.text.split(' ', 1)[1]
         tts = gTTS(text=text, lang='tr')  # Türkçe konuşsun istersen 'tr' yaz
         tts.save('speech.mp3')
-        await message.reply_audio('speech.mp3', title="TTS", caption="İşte sesli mesajınız 🎧")
+        await message.reply_audio('speech.mp3', title="dönüştürdüm", caption="İşte sesli mesajınız 🎧")
     except Exception as e:
         await message.reply(f"Hata oluştu: {str(e)}")
