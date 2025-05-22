@@ -24,27 +24,32 @@ def get_random_message(love_percentage):
 
 @app.on_message(filters.command("love", prefixes="/"))
 async def love_command(client, message):
-    if message.chat.type in ["group", "supergroup"]:
+    # Özel mesaj değilse (private dışı)
+    if message.chat.type != "private":
         members = []
-        async for member in client.iter_chat_members(message.chat.id):
-            # Mention alın (kullanıcı adı varsa @username yoksa ismi)
-            user = member.user
-            if user.username:
-                mention = f"@{user.username}"
-            else:
-                mention = user.mention  # Kullanıcının ismine göre mention
-
-            members.append(mention)
+        try:
+            async for member in client.iter_chat_members(message.chat.id):
+                user = member.user
+                if user.is_bot:
+                    continue  # Botları atla
+                if user.username:
+                    mention = f"@{user.username}"
+                else:
+                    mention = user.mention  # Kullanıcının ismine göre mention
+                members.append(mention)
+        except Exception:
+            # Eğer üye listesine erişim olmazsa boş bırak
+            members = []
 
         if len(members) < 2:
-            await message.reply_text("Grup içinde yeterli üye yok.")
+            await message.reply_text("Bu sohbette yeterli üye yok ya da üye listesine erişilemiyor.")
             return
-        
+
         user1, user2 = random.sample(members, 2)
         love_percentage = random.randint(10, 100)
         love_message = get_random_message(love_percentage)
-        
+
         response = f"{user1} 💕 + {user2} 💕 = {love_percentage}%\n\n{love_message}"
         await message.reply_text(response)
     else:
-        await message.reply_text("Bu komut sadece gruplarda kullanılabilir.")
+        await message.reply_text("Bu komut özel mesajlarda kullanılamaz.")
