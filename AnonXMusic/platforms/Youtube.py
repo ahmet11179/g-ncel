@@ -11,8 +11,8 @@ from pyrogram.types import Message
 from youtubesearchpython.__future__ import VideosSearch
 
 
-from AnonXMusictabase import is_on_off
-from AnonXMusicrmatters import time_to_seconds
+from AnonXMusic.utils.database import is_on_off
+from AnonXMusic.utils.formatters import time_to_seconds
 
 
 def cookies():
