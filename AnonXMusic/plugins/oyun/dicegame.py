@@ -12,9 +12,7 @@ async def dice(bot, message):
 
     x = await bot.send_dice(message.chat.id)  # Zar atılır
     m = x.dice.value  # Zarın sonucu alınır
-  
 
-  
 @app.on_message(filters.command("dart"))
 async def dice(bot, message):
     try:
