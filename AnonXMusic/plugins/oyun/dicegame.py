@@ -53,7 +53,7 @@ async def dice(bot, message):
     x = await bot.send_dice(message.chat.id, "🎳")  # Bowling oyunu
     m = x.dice.value  # Sonuç alınır
 
-@app.on_message(filters.command("Bowling
+@app.on_message(filters.command("football"))
 async def dice(bot, message):
     try:
         # Botun mesaj silme yetkisini kontrol et ve silme işlemi yap
