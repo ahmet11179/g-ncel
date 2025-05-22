@@ -2,7 +2,7 @@ from pyrogram import Client, filters
 from pyrogram.enums import ChatType
 import random
 
-from AnonXMusic import app as app
+from AnonXMusic import app  # app kesin Pyrogram Client olmalı
 
 def get_random_message(love_percentage: int) -> str:
     if love_percentage <= 30:
@@ -26,10 +26,6 @@ def get_random_message(love_percentage: int) -> str:
 
 @app.on_message(filters.command("love") & ~filters.private)
 async def love_command(client, message):
-    if message.chat.type not in [ChatType.GROUP, ChatType.SUPERGROUP]:
-        await message.reply_text("Bu komut sadece grup sohbetlerinde kullanılabilir.")
-        return
-
     members = []
     try:
         async for member in client.iter_chat_members(message.chat.id):
@@ -55,7 +51,3 @@ async def love_command(client, message):
 
     response = f"{user1} 💕 + {user2} 💕 = {love_percentage}%\n\n{love_message}"
     await message.reply_text(response)
-
-if __name__ == "__main__":
-    print("Bot başlatılıyor...")
-    app.run()
