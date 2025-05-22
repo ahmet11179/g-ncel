@@ -17,6 +17,7 @@ async def handwrite(_, message: Message):
 
     caption = f"""
 Başarıyla yazılmış metin 💘
+🥀 yapan: {message.from_user.mention}✨
 """
     await m.delete()  # `await` ekledik çünkü bu da bir async işlemi
     await message.reply_photo(photo=write, caption=caption)  # `await` ekledik
