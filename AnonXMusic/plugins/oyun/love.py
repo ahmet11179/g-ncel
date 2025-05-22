@@ -1,5 +1,7 @@
 from pyrogram import Client, filters
+from pyrogram.enums import ChatType
 import random
+
 from AnonXMusic import app as app
 
 def get_random_message(love_percentage: int) -> str:
@@ -24,8 +26,7 @@ def get_random_message(love_percentage: int) -> str:
 
 @app.on_message(filters.command("love") & ~filters.private)
 async def love_command(client, message):
-    # Sadece grup ve süpergruplarda çalışacak
-    if message.chat.type not in ["group", "supergroup"]:
+    if message.chat.type not in [ChatType.GROUP, ChatType.SUPERGROUP]:
         await message.reply_text("Bu komut sadece grup sohbetlerinde kullanılabilir.")
         return
 
@@ -34,11 +35,11 @@ async def love_command(client, message):
         async for member in client.iter_chat_members(message.chat.id):
             user = member.user
             if user.is_bot:
-                continue  # Botları atla
+                continue
             if user.username:
                 mention = f"@{user.username}"
             else:
-                mention = user.mention  # İsim ile mention
+                mention = user.mention
             members.append(mention)
     except Exception as e:
         await message.reply_text(f"Üye listesine erişim hatası: {e}")
