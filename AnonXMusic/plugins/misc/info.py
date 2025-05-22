@@ -83,7 +83,6 @@ INFO_TEXT = """✨───────────────✨
 🔖  • Kullanıcı Adı: {}
 📢  • Tanıtım: {}
 ⏰  • Son Görülme: {}
-🌐  • DC ID: {}
 📝  • Biyografi: {}
 
 ✨───────────────✨
@@ -145,7 +144,7 @@ async def userinfo(_, message):
                 welcome_photo = random.choice(random_photo)
                 
             await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
-                id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
+                id, first_name, last_name, username, mention, status, bio), reply_to_message_id=message.id)
         except Exception as e:
             await message.reply_text(str(e))        
       
@@ -210,6 +209,6 @@ async def userinfo(_, message):
                 welcome_photo = random.choice(random_photo)
                 
             await app.send_photo(chat_id, photo=welcome_photo, caption=INFO_TEXT.format(
-                id, first_name, last_name, username, mention, status, dc_id, bio), reply_to_message_id=message.id)
+                id, first_name, last_name, username, mention, status, bio), reply_to_message_id=message.id)
         except Exception as e:
             await message.reply_text(str(e))
