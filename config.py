@@ -9,8 +9,8 @@ from pyrogram import filters
 load_dotenv()
 # ------------------------------------
 # -----------------------------------------------------
-API_ID = int(getenv("API_ID", "21763340"))
-API_HASH = getenv("API_HASH", "fd495447e3ed89e2417db1cceff7e351") #ASİSTAN APİ HASH
+API_ID = int(getenv("API_ID", "27606753"))
+API_HASH = getenv("API_HASH", "b060babef6dd4a784ea36ac9a3387de1") #ASİSTAN APİ HASH
 
 EVAL = list(map(int, getenv("EVAL", "7716352578 7091230649").split()))
 # ------------------------------------------------------
@@ -113,8 +113,8 @@ TG_VIDEO_FILESIZE_LIMIT = int(getenv("TG_VIDEO_FILESIZE_LIMIT", "5242880000"))
 # ------------------------------------
 # ------------------------------------
 # ------------------------------------
-STRING1 = getenv("STRING_SESSION", "BAFMFQwAVW2wFx3Sd6tsskTbIkMpbJqVaufgbeRY2FXvpEXSL0g1XcnRZASEBvEV_OYJJJptEsa978Y2rfdjTxBLGjkrtbuyyQcNIfQvlB6ChmdRms71j0S9pjlcZG7N_zNbpyh3cwoWDu-2E1OYI9B47Vy8-v36docXWDGwMIJcCjoyphNSl4vIKd4H2svirwzt7czOh50Uwmpy05p-NVqUBlKdq6aMCgpDnApCW20oZdkjY3Z5DaX6-8ohng4WVtmQ54e5qKKe3xpAjlh_wHVra26MDyPp_Pa7pKSTGcYnwSsgZuaU2dt0nTZL1x7czBpSv8RTC_9tBQSiLhu8EQy7NR2AUwAAAAG1u3TuAA") #ASİSTAN SESSİON
-STRING2 = getenv("STRING_SESSION2", None)
+STRING1 = getenv("STRING_SESSION", "AQGlPuEAftZfjJYIe1g-NVelgWukGwOW8pwl0ViRUI0G8mnfhLKaUHbG9kXgdR3ih_Vwzpx7XHgyeiUTyL32taRZ4DmhMrQzn9-MkjhD_i-aQA9W_pI7Rar9zEFcVlpGLwDDmrKupYMuz3xPGeNp7D1I9N3EKHXayDVTZbXKYOyozT-cYe2NoS2fTMS6oNdefD6wTJSstkOnhB4ryB-BK1nw6aptd3e2qVRi-wNz8Eg5YnNLK73p5RvSbFLJ-YCqzHS-o4M7E96WmWLrRS71svdxnWRdr4IQiEQYhDIyhVANWU5z7zCgGd0LG4pzHyXUNiqzTPljlRZuh0MTeA3neOk2y7pmbgAAAAHiXvUSAA") #ASİSTAN SESSİON
+STRING2 = getenv("STRING_SESSION2", "BAGlPuEALLiqOTkp-xR387CA6hG7LhnhHdxQqzizHyDDK3tNjlo4QtD2B1rKE6vHKxDiMmQvACxHYTqhL3WBAkSc1NPBofOJ7zqgjM81nSs-UkJnp8_MotmjOTd6RKUPQGanJCkmiO1Y1wRQE0XvLkCq5ohmo263NXfBQeSIm9ZbrhPTsm8gAiYu1EdRY7BS8kKynOdqYjWWyak0cZRFxExvCVVM3gcv0oPdd4Ub1tvoZaU6ZM3MKqsEBf3ANNQPO07oJHOmytp43HUpnT24OwWwvIkwz6d_B5d0kPlgq0mu0tgdY8w_3RE9mudL6HzbgQkruhReKrhqiORsmUR4vhBqAwheKQAAAAHSyI2rAA")
 STRING3 = getenv("STRING_SESSION3", None)
 STRING4 = getenv("STRING_SESSION4", None)
 STRING5 = getenv("STRING_SESSION5", None)
